@@ -32,8 +32,73 @@
 
     </div>
 
+    <!-- bs 模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示框</h4>
+                </div>
+                <div class="modal-body">
 
-   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../web_back/js/jquery-1.12.4.min.js"></script>
+    <script src="../web_back/js/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../web_back/js/bootstrap/css/bootstrap.min.css">
+    <script>
+        $(function () {
+            $('.input_sub').on('click', function (e) {
+                e.preventDefault();
+                //获取邮箱密码的输入内容
+                var userName = $('.input_txt').val();
+                var password = $('.input_pass').val();
+                //判断用户输入是否为空
+                if (userName == '' || password == '') {
+                    $('.modal-body').text('输入为空');
+                    $('#myModal').modal({ keyboard: true });
+                    return;
+                }
+
+                //发送请求
+                $.ajax({
+                    type: 'post',
+                    url: 'https://autumnfish.cn/big/admin/login',
+                    data: {
+                        user_name: userName,
+                        password: password,
+                    },
+                    success: function (backData) {
+                        if (backData.code == 200) {
+                            window.location.href='./index.html'
+                        } else {
+                            $('.modal-body').text('输入错误');
+                            $('#myModal').modal({ keyboard: true });
+                        }
+                    }
+                })
+            })
+        })
+
+
+
+
+
+
+
+    </script>
+
+
+
 </body>
 
 </html>
